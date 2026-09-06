@@ -1,0 +1,48 @@
+#include <stdio.h>
+
+void sortAdjList(int V){
+for(int i=0;i<V;i++){
+Node *p=adjList[i];
+while(p!=NULL){
+Node *q=p->next;
+while(q!=NULL){
+if(p->vertex>q->vertex){
+int temp=p->vertex;
+p->vertex=q->vertex;
+q->vertex=temp;
+}
+q=q->next;
+}
+p=p->next;
+}
+}
+}
+
+void DFS(int start){
+visited[start]=1;
+printf("%d ",start);
+Node *p=adjList[start];
+while(p!=NULL){
+if(!visited[p->vertex])
+DFS(p->vertex);
+p=p->next;
+}
+}
+
+int main(){
+int V,E;
+int u,v,start;
+scanf("%d %d",&V,&E);
+for(int i=0;i<V;i++){
+adjList[i]=NULL;
+visited[i]=0;
+}
+for(int i=0;i<E;i++){
+scanf("%d %d",&u,&v);
+addEdge(u,v);
+}
+sortAdjList(V);
+scanf("%d",&start);
+DFS(start);
+return 0;
+}
