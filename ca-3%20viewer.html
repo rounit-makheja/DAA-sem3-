@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1020">
+  <meta name="description" content="DAA CA-3 presentation viewer and educational video for Dijkstra's Algorithm.">
+  <title>Dijkstra's Algorithm | DAA CA-3 Viewer</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b1020;
+      --panel: #131b2e;
+      --border: #293650;
+      --text: #f1f5f9;
+      --muted: #a5b4cc;
+      --accent: #67e8f9;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+    .container { width: min(1100px, 92%); margin: auto; padding: 38px 0 56px; }
+    header { margin-bottom: 28px; }
+    .tag {
+      display: inline-block; border: 1px solid var(--border); border-radius: 999px;
+      padding: 5px 12px; color: var(--accent); font-size: 12px; letter-spacing: .06em;
+    }
+    h1 { font-size: clamp(30px, 5vw, 48px); line-height: 1.15; margin: 16px 0 10px; }
+    h2 { font-size: 21px; margin: 0; }
+    p { color: var(--muted); }
+    .card {
+      background: var(--panel); border: 1px solid var(--border); border-radius: 16px;
+      padding: 22px; margin-top: 22px; overflow: hidden;
+    }
+    .card-header {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 16px;
+    }
+    .card-header p { margin: 5px 0 0; }
+    .viewer {
+      display: block; width: 100%; height: min(72vh, 720px); min-height: 420px;
+      border: 0; border-radius: 10px; background: #fff;
+    }
+    video { display: block; width: 100%; max-height: 650px; border-radius: 10px; background: #000; }
+    .button {
+      display: inline-block; text-decoration: none; color: #07111c; background: var(--accent);
+      padding: 9px 14px; border-radius: 9px; font-weight: 700; font-size: 14px;
+    }
+    .secondary { color: var(--text); background: transparent; border: 1px solid var(--border); }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+    .notice { font-size: 13px; }
+    footer { text-align: center; margin-top: 32px; color: var(--muted); font-size: 13px; }
+    @media (max-width: 600px) {
+      .container { padding-top: 24px; }
+      .card { padding: 14px; }
+      .viewer { min-height: 350px; height: 60vh; }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header>
+      <span class="tag">DESIGN AND ANALYSIS OF ALGORITHMS · CA-3</span>
+      <h1>Dijkstra's Algorithm</h1>
+      <p>Explore the presentation and AI-generated educational video explaining the shortest-path algorithm.</p>
+    </header>
+
+    <section class="card">
+      <div class="card-header">
+        <div>
+          <h2>01 · Presentation Viewer</h2>
+          <p>Use the embedded viewer to navigate through the slides.</p>
+        </div>
+        <a id="ppt-download" class="button secondary" href="./Dijkstras-Algorithm.pptx" download>Download PPT</a>
+      </div>
+      <iframe
+        id="ppt-viewer"
+        class="viewer"
+        title="Dijkstra's Algorithm PowerPoint presentation"
+        loading="lazy"
+        allowfullscreen>
+      </iframe>
+      <p id="ppt-status" class="notice" role="status">
+        The online Office viewer requires the PPT file to be publicly accessible.
+      </p>
+      <div class="actions">
+        <a class="button secondary" href="./Dijkstras-Algorithm.pptx" target="_blank" rel="noopener">Open PPT file</a>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-header">
+        <div>
+          <h2>02 · Educational Video</h2>
+          <p>Play, pause, seek, or watch full-screen.</p>
+        </div>
+        <a id="video-download" class="button secondary" href="./dijkstra_explainer_1080p.mp4" download>Download Video</a>
+      </div>
+      <video id="video-player" controls playsinline preload="metadata">
+        Your browser does not support HTML video playback.
+      </video>
+      <p id="video-status" class="notice" role="status">Loading video…</p>
+    </section>
+
+    <section class="card">
+      <h2>AI Tool Attribution</h2>
+      <p>Presentation: Generated using Gamma.</p>
+      <p>Video: Generated using Higgsfield.</p>
+    </section>
+
+    <footer>Academic project · DAA CA-3 · Dijkstra's Algorithm</footer>
+  </main>
+
+  <script>
+    /*
+      SETUP:
+      1. Replace these two values with your GitHub username and repository name.
+      2. Ensure this file and both media files are in the repository root.
+      3. The PowerPoint embed uses Microsoft's online viewer, which requires a
+         publicly reachable PPT URL. A private repository will not work with it.
+    */
+    const CONFIG = {
+      githubUser: "YOUR_GITHUB_USERNAME",
+      repository: "YOUR_REPOSITORY_NAME",
+      branch: "main",
+      pptFile: "Dijkstras-Algorithm.pptx",
+      videoFile: "dijkstra_explainer_1080p.mp4"
+    };
+
+    const pptLocal = "./" + encodeURIComponent(CONFIG.pptFile);
+    const videoLocal = "./" + encodeURIComponent(CONFIG.videoFile);
+
+    const pptDownload = document.getElementById("ppt-download");
+    const video = document.getElementById("video-player");
+    const videoDownload = document.getElementById("video-download");
+    const videoStatus = document.getElementById("video-status");
+    const pptStatus = document.getElementById("ppt-status");
+    const pptViewer = document.getElementById("ppt-viewer");
+
+    pptDownload.href = pptLocal;
+    video.src = videoLocal;
+    videoDownload.href = videoLocal;
+
+    if (CONFIG.githubUser !== "YOUR_GITHUB_USERNAME" &&
+        CONFIG.repository !== "YOUR_REPOSITORY_NAME") {
+      const pptRawUrl =
+        `https://raw.githubusercontent.com/${CONFIG.githubUser}/` +
+        `${CONFIG.repository}/${CONFIG.branch}/` +
+        encodeURIComponent(CONFIG.pptFile);
+      pptViewer.src =
+        "https://view.officeapps.live.com/op/embed.aspx?src=" +
+        encodeURIComponent(pptRawUrl);
+      pptStatus.textContent =
+        "If the slides do not appear, use Open PPT file or Download PPT. " +
+        "The Office viewer depends on Microsoft's service and public access to the file.";
+    } else {
+      pptStatus.textContent =
+        "Before the presentation embed can load, edit the CONFIG values in index.html " +
+        "with your GitHub username and repository name. The PPT download link is already set.";
+    }
+
+    video.addEventListener("error", () => {
+      videoStatus.textContent =
+        "The video could not load. Check that dijkstra_explainer_1080p.mp4 is in the same folder as index.html.";
+    });
+    video.addEventListener("loadedmetadata", () => {
+      videoStatus.textContent = "Video ready to play.";
+    });
+  </script>
+</body>
+</html>
